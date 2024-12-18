@@ -1,0 +1,18 @@
+<launch>
+  <!-- Launch the map server to load the map -->
+  <node name="map_server" pkg="map_server" type="map_server" args="/path/to/your/map.yaml" /
+  <!-- Start AMCL localization -->
+  <node name="amcl" pkg="amcl" type="amcl" output="screen">
+    <param name="odom_model_type" value="diff" />
+    <param name="update_min_d" value="0.2" />
+    <param name="update_min_a" value="0.2" />
+    <param name="odom_alpha5" value="0.1" />
+    <param name="laser_max_beams" value="60" />
+  </node>
+
+  <!-- Start RViz for visualization -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_nav.rviz" />
+
+  <!-- Launch the move_base node -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch" />
+</launch>
